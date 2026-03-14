@@ -91,8 +91,8 @@ export function Notifications() {
         </form>
       </Dialog>
 
-      <Card sx={{ borderRadius: 3, boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
-        <Box sx={{ p: 2, borderBottom: '1px solid rgba(0,0,0,0.08)', bgcolor: 'rgba(0,0,0,0.01)' }}>
+      <Card sx={{ borderRadius: 3 }}>
+        <Box sx={{ p: 2, borderBottom: '1px solid rgba(0,0,0,0.08)', bgcolor: 'action.hover' }}>
           <Typography variant="subtitle2" color="textSecondary">Recent Notifications</Typography>
         </Box>
         <List sx={{ p: 0 }}>
@@ -103,14 +103,14 @@ export function Notifications() {
               sx={{ 
                 py: 2, 
                 px: 3,
-                '&:hover': { bgcolor: 'rgba(0,0,0,0.01)' },
+                '&:hover': { bgcolor: 'action.hover' },
                 display: 'flex',
                 flexDirection: { xs: 'column', sm: 'row' },
                 alignItems: { xs: 'flex-start', sm: 'center' }
               }}
             >
               <ListItemAvatar>
-                <Avatar sx={{ bgcolor: 'rgba(7, 94, 84, 0.1)', color: 'primary.main' }}>
+                <Avatar sx={{ bgcolor: 'primary.light', color: 'primary.main', opacity: 0.8 }}>
                   <BellIcon />
                 </Avatar>
               </ListItemAvatar>

@@ -115,9 +115,9 @@ export function Billing() {
       </Dialog>
 
       {/* Desktop Table View */}
-      <TableContainer component={Paper} sx={{ display: { xs: 'none', md: 'block' }, borderRadius: 3, boxShadow: '0 4px 12px rgba(0,0,0,0.05)', overflow: 'hidden' }}>
+      <TableContainer component={Paper} sx={{ display: { xs: 'none', md: 'block' }, borderRadius: 3, overflow: 'hidden' }}>
         <Table>
-          <TableHead sx={{ bgcolor: 'rgba(0,0,0,0.02)' }}>
+          <TableHead sx={{ bgcolor: 'action.hover' }}>
             <TableRow>
               <TableCell sx={{ fontWeight: 'bold' }}>Invoice ID</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Customer</TableCell>

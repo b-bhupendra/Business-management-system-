@@ -129,14 +129,14 @@ export function Customers() {
               sx={{ 
                 py: 2, 
                 px: 3,
-                '&:hover': { bgcolor: 'rgba(0,0,0,0.01)' },
+                '&:hover': { bgcolor: 'action.hover' },
                 display: 'flex',
                 flexDirection: { xs: 'column', sm: 'row' },
                 alignItems: { xs: 'flex-start', sm: 'center' }
               }}
             >
               <ListItemAvatar>
-                <Avatar sx={{ bgcolor: 'secondary.main' }}>
+                <Avatar sx={{ bgcolor: 'primary.light', color: 'primary.contrastText' }}>
                   <PersonIcon />
                 </Avatar>
               </ListItemAvatar>
