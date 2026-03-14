@@ -1,0 +1,5 @@
+{
+  "name": "BizManage",
+  "description": "A business management application to track customers, generate bills, send notifications, and draw analytical insights.",
+  "requestFramePermissions": []
+}
