@@ -21,7 +21,7 @@ export function Layout({
   onToggleDarkMode: () => void
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const drawerWidth = isCollapsed ? collapsedWidth : expandedWidth;
 
