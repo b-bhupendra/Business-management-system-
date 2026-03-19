@@ -23,38 +23,48 @@ export default function App() {
   const theme = useMemo(() => createTheme({
     palette: {
       mode: darkMode ? 'dark' : 'light',
-      primary: { main: darkMode ? '#60a5fa' : '#2563eb' }, // Blue tones
-      secondary: { main: '#64748b' }, // Slate
+      primary: { main: darkMode ? '#00f2fe' : '#4facfe' }, // Vibrant cyan/blue
+      secondary: { main: darkMode ? '#a18cd1' : '#fbc2eb' }, // Purple tones
       background: { 
-        default: darkMode ? '#0f172a' : '#f8fafc', // Slate 900 / Slate 50
-        paper: darkMode ? '#1e293b' : '#ffffff' // Slate 800 / White
+        default: darkMode ? '#0b0f19' : '#f4f7f6', // Deep dark / soft grey
+        paper: darkMode ? '#13192b' : '#ffffff' // Darker paper / White
       },
     },
     typography: {
       fontFamily: '"Inter", "Helvetica", "Arial", sans-serif',
-      h1: { fontFamily: '"Playfair Display", serif', fontWeight: 700 },
-      h2: { fontFamily: '"Playfair Display", serif', fontWeight: 700 },
-      h3: { fontFamily: '"Playfair Display", serif', fontWeight: 700 },
-      h4: { fontFamily: '"Playfair Display", serif', fontWeight: 700 },
-      h5: { fontFamily: '"Playfair Display", serif', fontWeight: 700 },
-      h6: { fontFamily: '"Playfair Display", serif', fontWeight: 600 },
+      h1: { fontFamily: '"Outfit", sans-serif', fontWeight: 800 },
+      h2: { fontFamily: '"Outfit", sans-serif', fontWeight: 700 },
+      h3: { fontFamily: '"Outfit", sans-serif', fontWeight: 700 },
+      h4: { fontFamily: '"Outfit", sans-serif', fontWeight: 600 },
+      h5: { fontFamily: '"Outfit", sans-serif', fontWeight: 600 },
+      h6: { fontFamily: '"Outfit", sans-serif', fontWeight: 600 },
+      button: { fontFamily: '"Outfit", sans-serif', fontWeight: 600 },
     },
+    shape: { borderRadius: 16 },
     components: {
       MuiCard: {
         styleOverrides: {
           root: {
-            borderRadius: 16,
-            boxShadow: darkMode ? '0 4px 20px rgba(0,0,0,0.4)' : '0 4px 20px rgba(0,0,0,0.03)',
-            border: darkMode ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)',
+            borderRadius: 24,
+            backdropFilter: 'blur(10px)',
+            background: darkMode ? 'rgba(19, 25, 43, 0.7)' : 'rgba(255, 255, 255, 0.8)',
+            boxShadow: darkMode ? '0 8px 32px 0 rgba(0, 0, 0, 0.3)' : '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+            border: darkMode ? '1px solid rgba(255, 255, 255, 0.05)' : '1px solid rgba(255, 255, 255, 0.5)',
           }
         }
       },
       MuiButton: {
         styleOverrides: {
           root: {
-            borderRadius: 8,
+            borderRadius: 12,
             textTransform: 'none',
-            fontWeight: 600,
+            padding: '10px 24px',
+            transition: 'all 0.3s ease-in-out',
+            boxShadow: 'none',
+            '&:hover': {
+              boxShadow: darkMode ? '0 0 15px rgba(0,242,254,0.4)' : '0 10px 20px rgba(79,172,254,0.2)',
+              transform: 'translateY(-2px)'
+            }
           }
         }
       }

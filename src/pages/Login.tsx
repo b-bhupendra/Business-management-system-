@@ -1,30 +1,30 @@
 import React, { useState } from 'react';
 import { 
   Box, Card, CardContent, Typography, TextField, 
-  Button, InputAdornment, IconButton, Alert, Fade, Avatar 
+  Button, InputAdornment, IconButton, Alert, Avatar 
 } from '@mui/material';
 import { 
   Visibility, VisibilityOff, Lock, Email, 
   BusinessCenter 
 } from '@mui/icons-material';
+import { motion } from 'motion/react';
 
 interface LoginProps {
   onLogin: () => void;
 }
 
 export function Login({ onLogin }: LoginProps) {
-  const [email, setEmail] = useState('admin@bizmanage.com');
+  const [email, setEmail] = useState('admin@luminapro.com');
   const [password, setPassword] = useState('admin123');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Default credentials: admin@bizmanage.com / admin123
-    if (email === 'admin@bizmanage.com' && password === 'admin123') {
+    if (email === 'admin@luminapro.com' && password === 'admin123') {
       onLogin();
     } else {
-      setError('Invalid email or password. Try admin@bizmanage.com / admin123');
+      setError('Invalid email or password. Try admin@luminapro.com / admin123');
     }
   };
 
@@ -34,26 +34,49 @@ export function Login({ onLogin }: LoginProps) {
       display: 'flex', 
       alignItems: 'center', 
       justifyContent: 'center',
-      backgroundColor: 'transparent',
+      bgcolor: 'background.default',
+      position: 'relative',
+      overflow: 'hidden'
     }}>
-      <Fade in timeout={1000}>
-        <Card sx={{ 
+      {/* Background orbs */}
+      <Box sx={{
+        position: 'absolute', top: '10%', right: '10%', width: {xs: '60vw', md: '30vw'}, height: {xs: '60vw', md: '30vw'},
+        background: 'radial-gradient(circle, rgba(0,242,254,0.15) 0%, rgba(0,0,0,0) 70%)',
+        borderRadius: '50%', zIndex: 0, filter: 'blur(60px)',
+      }} className="animate-float" />
+      <Box sx={{
+        position: 'absolute', bottom: '10%', left: '10%', width: {xs: '60vw', md: '30vw'}, height: {xs: '60vw', md: '30vw'},
+        background: 'radial-gradient(circle, rgba(161,140,209,0.15) 0%, rgba(0,0,0,0) 70%)',
+        borderRadius: '50%', zIndex: 0, filter: 'blur(60px)', animationDelay: '2s'
+      }} className="animate-float" />
+
+      <motion.div 
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+        style={{ width: '100%', maxWidth: 420, zIndex: 1, padding: '0 20px' }}
+      >
+        <Card className="glass-panel" sx={{ 
           width: '100%', 
-          maxWidth: 400, 
           borderRadius: 4, 
-          boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-          bgcolor: 'background.paper'
+          boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+          bgcolor: 'background.paper',
+          border: '1px solid rgba(255,255,255,0.05)'
         }}>
           <CardContent sx={{ p: 4 }}>
             <Box sx={{ textAlign: 'center', mb: 4 }}>
-              <Avatar sx={{ bgcolor: 'primary.main', width: 56, height: 56, mx: 'auto', mb: 2 }}>
-                <BusinessCenter fontSize="large" />
+              <Avatar sx={{ 
+                background: 'linear-gradient(135deg, #00f2fe 0%, #4facfe 100%)', 
+                width: 64, height: 64, mx: 'auto', mb: 2,
+                boxShadow: '0 4px 20px rgba(0,242,254,0.4)'
+              }}>
+                <BusinessCenter fontSize="large" sx={{ color: '#fff' }} />
               </Avatar>
-              <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-                BizManage
+              <Typography variant="h4" sx={{ fontWeight: 800, fontFamily: 'Outfit' }} className="text-gradient">
+                Lumina Pro
               </Typography>
-              <Typography variant="body2" color="textSecondary">
-                Sign in to manage your business
+              <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
+                Sign in to your premium workspace
               </Typography>
             </Box>
 
@@ -109,13 +132,19 @@ export function Login({ onLogin }: LoginProps) {
                 type="submit"
                 variant="contained"
                 size="large"
+                className="animate-pulse-glow"
                 sx={{ 
                   mt: 4, 
                   py: 1.5, 
                   borderRadius: 3, 
-                  fontWeight: 'bold',
+                  fontWeight: 800,
                   textTransform: 'none',
-                  fontSize: '1.1rem'
+                  fontSize: '1.1rem',
+                  background: 'linear-gradient(135deg, #00f2fe 0%, #4facfe 100%)',
+                  color: '#fff',
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                  }
                 }}
               >
                 Sign In
@@ -126,12 +155,12 @@ export function Login({ onLogin }: LoginProps) {
               <Typography variant="caption" color="textSecondary">
                 Demo Credentials:
                 <br />
-                admin@bizmanage.com / admin123
+                admin@luminapro.com / admin123
               </Typography>
             </Box>
           </CardContent>
         </Card>
-      </Fade>
+      </motion.div>
     </Box>
   );
 }

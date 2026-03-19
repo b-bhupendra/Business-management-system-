@@ -1,99 +1,111 @@
 import React from 'react';
-import { Box, Typography, Button, Container, Grid, Card, CardContent, useTheme } from '@mui/material';
+import { Box, Typography, Button, Container, Grid, useTheme } from '@mui/material';
 import { EventSeat, Payment, NotificationsActive, QrCode } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'motion/react';
 
 export function LandingPage() {
   const theme = useTheme();
   const navigate = useNavigate();
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { staggerChildren: 0.2 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { type: "spring", stiffness: 100 }
+    }
+  };
+
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', color: 'text.primary' }}>
+    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', color: 'text.primary', overflow: 'hidden', position: 'relative' }}>
+      {/* Background glowing orbs */}
+      <Box sx={{
+        position: 'absolute', top: '-10%', left: '-10%', width: {xs: '80vw', md: '40vw'}, height: {xs: '80vw', md: '40vw'},
+        background: 'radial-gradient(circle, rgba(0,242,254,0.15) 0%, rgba(0,0,0,0) 70%)',
+        borderRadius: '50%', zIndex: 0, filter: 'blur(60px)',
+      }} className="animate-float" />
+      <Box sx={{
+        position: 'absolute', bottom: '-10%', right: '-10%', width: {xs: '80vw', md: '40vw'}, height: {xs: '80vw', md: '40vw'},
+        background: 'radial-gradient(circle, rgba(161,140,209,0.15) 0%, rgba(0,0,0,0) 70%)',
+        borderRadius: '50%', zIndex: 0, filter: 'blur(60px)', animationDelay: '2s'
+      }} className="animate-float" />
+
       {/* Hero Section */}
-      <Box sx={{ 
-        pt: 15, 
-        pb: 10, 
-        textAlign: 'center',
-        background: `linear-gradient(135deg, ${theme.palette.primary.main}15, ${theme.palette.secondary.main}15)`
-      }}>
-        <Container maxWidth="md">
-          <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-            CoExisting Space
-            <br />
-            Seat Reservation System
-          </Typography>
-          <Typography variant="h5" color="text.secondary" paragraph sx={{ mb: 4 }}>
-            Effortlessly manage and track seat assignments across various subsections like Trisha and G2 Library. Flexible monthly or n-month reservations.
-          </Typography>
-          <Button 
-            variant="contained" 
-            size="large" 
-            onClick={() => navigate('/app')}
-            sx={{ px: 4, py: 1.5, fontSize: '1.1rem', borderRadius: 2 }}
-          >
-            Go to Dashboard
-          </Button>
+      <Box sx={{ position: 'relative', zIndex: 1, pt: { xs: 15, md: 25 }, pb: 10, textAlign: 'center' }}>
+        <Container maxWidth="md" component={motion.div} initial="hidden" animate="visible" variants={containerVariants}>
+          <motion.div variants={itemVariants}>
+            <Typography variant="h1" gutterBottom sx={{ fontWeight: 800, fontSize: { xs: '3rem', md: '5rem' }, lineHeight: 1.1 }}>
+              Welcome to <br />
+              <span className="text-gradient">Lumina Pro</span>
+            </Typography>
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <Typography variant="h5" color="text.secondary" paragraph sx={{ mb: 6, maxWidth: '80%', mx: 'auto', lineHeight: 1.6 }}>
+              The most elegant and powerful seat reservation and payment tracking system. Seamless management, breathtaking design.
+            </Typography>
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <Button 
+              variant="contained" 
+              size="large" 
+              onClick={() => navigate('/app')}
+              className="animate-pulse-glow"
+              sx={{ 
+                px: 6, py: 2, fontSize: '1.2rem', 
+                borderRadius: '50px',
+                background: 'linear-gradient(135deg, #00f2fe 0%, #4facfe 100%)',
+                color: '#fff'
+              }}
+            >
+              Enter Dashboard
+            </Button>
+          </motion.div>
         </Container>
       </Box>
 
       {/* Features Section */}
-      <Container maxWidth="lg" sx={{ py: 10 }}>
-        <Typography variant="h3" align="center" gutterBottom sx={{ fontWeight: 'bold', mb: 6 }}>
-          Key Features
-        </Typography>
+      <Container maxWidth="lg" sx={{ py: 15, position: 'relative', zIndex: 1 }} component={motion.div} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={containerVariants}>
+        <motion.div variants={itemVariants}>
+          <Typography variant="h3" align="center" gutterBottom sx={{ fontWeight: 800, mb: 10 }}>
+            <span className="text-gradient">Premium Features</span>
+          </Typography>
+        </motion.div>
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card sx={{ height: '100%', textAlign: 'center', p: 2, borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
-              <CardContent>
-                <EventSeat color="primary" sx={{ fontSize: 60, mb: 2 }} />
-                <Typography variant="h6" gutterBottom fontWeight="bold">
-                  Seat Assignment
-                </Typography>
-                <Typography color="text.secondary">
-                  Assign seats to individuals for specific durations (monthly or n-months) in designated subsections.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card sx={{ height: '100%', textAlign: 'center', p: 2, borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
-              <CardContent>
-                <Payment color="primary" sx={{ fontSize: 60, mb: 2 }} />
-                <Typography variant="h6" gutterBottom fontWeight="bold">
-                  Flexible Payments
-                </Typography>
-                <Typography color="text.secondary">
-                  Accept payments via cash or integrated QR code platforms for seamless transactions.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card sx={{ height: '100%', textAlign: 'center', p: 2, borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
-              <CardContent>
-                <NotificationsActive color="primary" sx={{ fontSize: 60, mb: 2 }} />
-                <Typography variant="h6" gutterBottom fontWeight="bold">
-                  Payment Notifications
-                </Typography>
-                <Typography color="text.secondary">
-                  Built-in automated notifications to remind users of upcoming or overdue payments.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card sx={{ height: '100%', textAlign: 'center', p: 2, borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
-              <CardContent>
-                <QrCode color="primary" sx={{ fontSize: 60, mb: 2 }} />
-                <Typography variant="h6" gutterBottom fontWeight="bold">
-                  QR Integration
-                </Typography>
-                <Typography color="text.secondary">
-                  Generate unique QR codes for quick and easy payment processing on the spot.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+          {[
+            { icon: <EventSeat sx={{ fontSize: 48 }} />, title: "Smart Seating", desc: "Intelligent assignments for monthly or flexible durations." },
+            { icon: <Payment sx={{ fontSize: 48 }} />, title: "Fluid Payments", desc: "Seamless integrated tracking for all your transactions." },
+            { icon: <NotificationsActive sx={{ fontSize: 48 }} />, title: "Smart Alerts", desc: "Automated reminders that keep your revenue flowing." },
+            { icon: <QrCode sx={{ fontSize: 48 }} />, title: "Instant QR", desc: "Generate dynamic QR codes for lightning-fast payments." }
+          ].map((feature, idx) => (
+            <Grid item xs={12} sm={6} md={3} key={idx}>
+              <motion.div variants={itemVariants} whileHover={{ y: -10 }} transition={{ type: "spring", stiffness: 300 }} style={{ height: '100%' }}>
+                <Box className="glass-panel" sx={{ p: 4, height: '100%', borderRadius: 4, textAlign: 'center', transition: 'all 0.3s' }}>
+                  <Box sx={{ 
+                    display: 'inline-flex', p: 2, borderRadius: '24px', mb: 3,
+                    background: theme.palette.mode === 'dark' ? 'rgba(0,242,254,0.1)' : 'rgba(0,242,254,0.15)',
+                    color: '#00f2fe'
+                  }}>
+                    {feature.icon}
+                  </Box>
+                  <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ fontFamily: 'Outfit' }}>
+                    {feature.title}
+                  </Typography>
+                  <Typography color="text.secondary" variant="body2" sx={{ lineHeight: 1.7 }}>
+                    {feature.desc}
+                  </Typography>
+                </Box>
+              </motion.div>
+            </Grid>
+          ))}
         </Grid>
       </Container>
     </Box>
