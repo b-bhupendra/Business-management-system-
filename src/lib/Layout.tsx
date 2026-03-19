@@ -4,7 +4,8 @@ import {
   Menu as MenuIcon, Dashboard as DashboardIcon, People as PeopleIcon, 
   Receipt as ReceiptIcon, Notifications as NotificationsIcon, Logout as LogoutIcon,
   DarkMode as DarkModeIcon, LightMode as LightModeIcon,
-  ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon
+  ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon,
+  EventSeat as EventSeatIcon
 } from '@mui/icons-material';
 
 const expandedWidth = 240;
@@ -35,6 +36,7 @@ export function Layout({
 
   const navigation = [
     { name: 'Dashboard', id: 'dashboard', icon: <DashboardIcon /> },
+    { name: 'Reservations', id: 'reservations', icon: <EventSeatIcon /> },
     { name: 'Customers', id: 'customers', icon: <PeopleIcon /> },
     { name: 'Billing', id: 'billing', icon: <ReceiptIcon /> },
     { name: 'Notifications', id: 'notifications', icon: <NotificationsIcon /> },

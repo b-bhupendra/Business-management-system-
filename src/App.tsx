@@ -5,12 +5,15 @@
 
 import React, { useState, useMemo } from 'react';
 import { ThemeProvider, createTheme, CssBaseline, Box } from '@mui/material';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './lib/Layout';
 import { Dashboard } from './pages/Dashboard';
 import { Customers } from './pages/Customers';
 import { Billing } from './pages/Billing';
 import { Notifications } from './pages/Notifications';
 import { Login } from './pages/Login';
+import { LandingPage } from './pages/LandingPage';
+import { Reservations } from './pages/Reservations';
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -67,35 +70,36 @@ export default function App() {
     }
   };
 
-  if (!isAuthenticated) {
-    return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Box className={darkMode ? 'dark' : ''}>
-          <div className="animated-doodle" />
-          <Login onLogin={() => setIsAuthenticated(true)} />
-        </Box>
-      </ThemeProvider>
-    );
-  }
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box className={darkMode ? 'dark' : ''}>
         <div className="animated-doodle" />
-        <Layout 
-          currentTab={currentTab} 
-          setCurrentTab={setCurrentTab}
-          onLogout={() => setIsAuthenticated(false)}
-          darkMode={darkMode}
-          onToggleDarkMode={toggleDarkMode}
-        >
-          {currentTab === 'dashboard' && <Dashboard />}
-          {currentTab === 'customers' && <Customers />}
-          {currentTab === 'billing' && <Billing />}
-          {currentTab === 'notifications' && <Notifications />}
-        </Layout>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/app/*" element={
+              !isAuthenticated ? (
+                <Login onLogin={() => setIsAuthenticated(true)} />
+              ) : (
+                <Layout 
+                  currentTab={currentTab} 
+                  setCurrentTab={setCurrentTab}
+                  onLogout={() => setIsAuthenticated(false)}
+                  darkMode={darkMode}
+                  onToggleDarkMode={toggleDarkMode}
+                >
+                  {currentTab === 'dashboard' && <Dashboard />}
+                  {currentTab === 'reservations' && <Reservations />}
+                  {currentTab === 'customers' && <Customers />}
+                  {currentTab === 'billing' && <Billing />}
+                  {currentTab === 'notifications' && <Notifications />}
+                </Layout>
+              )
+            } />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
       </Box>
     </ThemeProvider>
   );

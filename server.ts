@@ -42,6 +42,21 @@ db.exec(`
     FOREIGN KEY (customer_id) REFERENCES customers(id)
   );
 
+  CREATE TABLE IF NOT EXISTS reservations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_id INTEGER NOT NULL,
+    subsection TEXT NOT NULL,
+    seat_number TEXT NOT NULL,
+    start_date TEXT NOT NULL,
+    end_date TEXT NOT NULL,
+    duration_months INTEGER NOT NULL,
+    amount REAL NOT NULL,
+    status TEXT DEFAULT 'pending',
+    pay_via TEXT,
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+  );
+
   CREATE TABLE IF NOT EXISTS notifications (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     customer_id INTEGER NOT NULL,
@@ -228,6 +243,45 @@ async function startServer() {
         WHERE notifications.id = ?
       `).get(info.lastInsertRowid);
       res.json(newNotification);
+    } catch (err: any) {
+      res.status(400).json({ error: err.message });
+    }
+  });
+
+  // Reservations
+  app.get('/api/reservations', (req, res) => {
+    const reservations = db.prepare(`
+      SELECT reservations.*, customers.name as customer_name 
+      FROM reservations 
+      JOIN customers ON reservations.customer_id = customers.id 
+      ORDER BY reservations.created_at DESC
+    `).all();
+    res.json(reservations);
+  });
+
+  app.post('/api/reservations', (req, res) => {
+    const { customer_id, subsection, seat_number, start_date, end_date, duration_months, amount, pay_via } = req.body;
+    try {
+      const info = db.prepare('INSERT INTO reservations (customer_id, subsection, seat_number, start_date, end_date, duration_months, amount, pay_via, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)').run(
+        customer_id, subsection, seat_number, start_date, end_date, duration_months, amount, pay_via, new Date().toISOString()
+      );
+      const newReservation = db.prepare(`
+        SELECT reservations.*, customers.name as customer_name 
+        FROM reservations 
+        JOIN customers ON reservations.customer_id = customers.id 
+        WHERE reservations.id = ?
+      `).get(info.lastInsertRowid);
+      res.json(newReservation);
+    } catch (err: any) {
+      res.status(400).json({ error: err.message });
+    }
+  });
+
+  app.patch('/api/reservations/:id/status', (req, res) => {
+    const { status } = req.body;
+    try {
+      db.prepare('UPDATE reservations SET status = ? WHERE id = ?').run(status, req.params.id);
+      res.json({ success: true });
     } catch (err: any) {
       res.status(400).json({ error: err.message });
     }
